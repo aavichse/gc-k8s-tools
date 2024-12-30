@@ -1,5 +1,4 @@
 <div align="center">
-<h1>Kubernetes Workload Label Generator</h1>
 <p><a href="../README.md">← Back to gc-k8s-tools</a></p>
 </div>
 
