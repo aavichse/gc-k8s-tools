@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: busybox-sleep-cronjob-{Id}
+  namespace: {Namespace}
+  labels:
+    example: value
+{Labels_4}
+  annotations:
+    example: value
+{Annotations_4}
+spec:
+  schedule: "*/1 * * * *"  # Runs every minute
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: busybox
+            image: busybox
+            command: ["sleep", "10"]  # Command to sleep for 10 seconds
+          restartPolicy: OnFailure
+

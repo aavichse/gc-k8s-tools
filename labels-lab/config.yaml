@@ -1,0 +1,38 @@
+namespace: 
+  name: "gc-example"
+  label_patterns:
+    "gc-label-{namespace}-{deployment_name}":
+      count: 10
+      length: 10
+    "gc-label-{namespace}-{deployment_name}-hash":
+      count: 10
+      length: 10
+
+workloads:
+  replicaset:
+    count: 10
+    label_patterns:
+      "gc-label-{namespace}-{deployment_name}":
+        count: 10
+        length: 10
+      "gc-label-{namespace}-{deployment_name}-hash":
+        count: 10
+        length: 10
+  deployment:
+    count: 10 
+    label_patterns:
+      "gc-label-{namespace}-{deployment_name}":
+        count: 10
+        length: 10
+      "gc-label-{namespace}-{deployment_name}-hash":
+        count: 1
+        length: 10
+  cron:
+    count: 5
+    label_patterns:
+      "gc-label-{namespace}-{deployment_name}":
+        count: 10
+        length: 10
+      "gc-label-{namespace}-{deployment_name}-hash":
+        count: 10
+        length: 10

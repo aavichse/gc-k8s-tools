@@ -1,0 +1,45 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "labels-lab create from config.yaml",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./gc-labels-lab.py",
+            "cwd": "${workspaceFolder}/labels-lab",
+            "console": "integratedTerminal",
+            "args": [
+                "-f", 
+                "config.yaml"
+            ]
+        },
+        {
+            "name": "labels-lab generate config with 5000 labels",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./gc-labels-lab.py",
+            "cwd": "${workspaceFolder}/labels-lab",
+            "console": "integratedTerminal",
+            "args": [
+                "--generate-config", 
+                "--total-labels",
+                "50000"
+            ]
+        },
+        {
+            "name": "labels-lab create from generated-config.yaml",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./gc-labels-lab.py",
+            "cwd": "${workspaceFolder}/labels-lab",
+            "console": "integratedTerminal",
+            "args": [
+                "-f", 
+                "generated_config.yaml"
+            ]
+        }
+    ]
+}
