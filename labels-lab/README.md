@@ -119,14 +119,14 @@ workloads:          # 90 remaining labels split across workloads
 
 Generate config on local directory : 
 ```bash
-docker run -v $(pwd):/app/ \
-  arikab64/gc-labels-lab:1.0 --generate-config --total-labels 500 \
-  --out /app/generated-config.yaml
+docker run -v $(pwd):/tmp/ \
+  ghcr.io/aavichse/gc-labels-lab:1.0 --generate-config --total-labels 500 \
+  --out /tmp/generated-config.yaml
 ```
 
 Generate manifests from local config file: 
 ```bash
 docker run -v $(pwd)/output:/app/output \
            -v $(pwd)/generated-config.yaml:/app/config.yaml \
-  arikab64/gc-labels-lab:1.0 -f /app/config.yaml 
+  ghcr.io/aavichse/gc-labels-lab:1.0 -f /app/config.yaml 
 ```

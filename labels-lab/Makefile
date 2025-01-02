@@ -1,4 +1,4 @@
-IMAGE_NAME := arikab64/gc-labels-lab
+IMAGE_NAME := ghcr.io/aavichse/gc-labels-lab
 DOCKERFILE := Dockerfile
 TAG := 1.0
 

@@ -23,5 +23,5 @@ spec:
     spec:
       containers:
       - name: busybox
-        image: busybox
+        image: ghcr.io/aavichse/busybox
         command: ["sleep", "3600"]  # Container will sleep for 1 hour

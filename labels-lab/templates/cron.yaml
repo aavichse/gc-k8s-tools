@@ -17,7 +17,7 @@ spec:
         spec:
           containers:
           - name: busybox
-            image: busybox
+            image: ghcr.io/aavichse/busybox
             command: ["sleep", "10"]  # Command to sleep for 10 seconds
           restartPolicy: OnFailure
 
