@@ -1,3 +1,4 @@
+import argparse
 from typing import Any
 from pathlib import Path
 from jinja2 import Environment , FileSystemLoader, Template
@@ -7,6 +8,11 @@ from typing import Dict, Optional, Any
 from datetime import datetime
 import uuid
 import yaml
+
+# Args 
+parser = argparse.ArgumentParser(description="Generate manifests for scale environment that simulate high volume traffic")
+parser.add_argument('--config', type=str, default='config.yaml', help='configuration file (default=config.yaml)')
+args = parser.parse_args()
 
 
 @dataclass
@@ -119,7 +125,7 @@ def main():
     
     env.globals['gc_labels'] = gc_labels
 
-    context = Context.from_yaml('config.yaml')
+    context = Context.from_yaml(args.config)
 
     outdir = Path('output', context.bootstrap_id)
     outdir.mkdir(parents=True, exist_ok=True)
