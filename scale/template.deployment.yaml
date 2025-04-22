@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+  namespace: gc-ns-{{ it.i }}
+  labels:
+    example: value
+  annotations:
+    gc/bootstrap-id: {{ bootstrap_id }}
+    gc/timestamp: {{ timestamp }}
+spec:
+  replicas: {{ replicaset }}
+  selector:
+    matchLabels:
+      app: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+  template:
+    metadata:
+      labels:
+        app: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+    spec:
+      containers:
+      - name: nwsim
+        image: arikab64/nwsim:1.2
+        command: ["python", "nwsim.py"]
+        args:
+          - "--stats-interval={{ stat_interval }}"
+          - "--connections-per-interval={{ connection_per_interval }}"
+          - "--batch-size={{ batch_size }}"
+          - "--no-namespaces={{ namespaces }}"
+          - "--no-deployments={{ deployments }}"
+          - "--same-ns-ratio={{ same_ns_ratio }}"
+        ports:
+          - containerPort: 8000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gc-ns-{{ it.i }}-svc-{{ it.j }}
+  namespace: gc-ns-{{ it.i }}
+  labels:
+    example: value
+  annotations:
+    example: value
+spec:
+  selector:
+    app: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+  ports:
+    - protocol: TCP
+      port: 8000  
+      targetPort: 8000  
+  type: ClusterIP  

@@ -1,0 +1,15 @@
+
+outdir: output 
+
+stat_interval: 10
+connection_per_interval: 5
+batch_size: 5
+same_ns_ratio: 30
+
+workloads: 
+  namespaces: 5
+  deployments: 3
+  replicaset: 2
+
+
+  
