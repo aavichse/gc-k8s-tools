@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+  name: gc-ns-{{ it.i }}-rs-{{ it.j }}
   namespace: gc-ns-{{ it.i }}
   labels:
     example: value
@@ -12,11 +12,12 @@ spec:
   replicas: {{ replicaset }}
   selector:
     matchLabels:
-      app: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+      app: gc-ns-{{ it.i }}-rs-{{ it.j }}
   template:
     metadata:
       labels:
-        app: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+        app: gc-ns-{{ it.i }}-rs-{{ it.j }}
+{{ gc_labels(indent=8, count=no_labels_per_pod) }}
     spec:
       containers:
       - name: nwsim
@@ -44,7 +45,7 @@ metadata:
     example: value
 spec:
   selector:
-    app: gc-ns-{{ it.i }}-deployment-{{ it.j }}
+    app: gc-ns-{{ it.i }}-rs-{{ it.j }}
   ports:
     - protocol: TCP
       port: 8000  

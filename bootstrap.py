@@ -22,6 +22,9 @@ class Context:
     connection_per_interval: int = 10
     batch_size: int = 5
     same_ns_ratio: int = 30    
+    
+    no_labels_per_pod: int = 5
+    total_labels: int = 0
 
     it:  dict[str, int] = field(default_factory=dict)   
 
@@ -30,21 +33,27 @@ class Context:
         with open(path, "r") as f:
             raw = yaml.safe_load(f)
         workloads = raw.get("workloads", {})
-        return Context(
+        context = Context(
             namespaces=int(workloads['namespaces']), 
             deployments=int(workloads['deployments']),
             replicaset=int(workloads['replicaset']),
+            total_labels=int(workloads['total_labels']),
             stat_interval=int(raw['stat_interval']),
             connection_per_interval=int(raw['connection_per_interval']),
             batch_size=int(raw['batch_size']),
             same_ns_ratio=int(raw['same_ns_ratio']),
         )
+        
+        context.no_labels_per_pod = max(1,  int(context.total_labels / (context.namespaces * context.deployments)))
+        
+        return context
 
 env = Environment(
     loader=FileSystemLoader("."), 
     trim_blocks=True, 
     lstrip_blocks=True
 )
+
 
 ns_template = env.get_template('template.namespace.yaml')
 deployment_template = env.get_template('template.deployment.yaml')
@@ -54,14 +63,20 @@ outdir: Path
 context: Context
 
 def bootstrap_manifests(): 
+    namespaces = context.namespaces
+    deployments = context.deployments
+    replica = context.replicaset
+    print(f'Writes manifests for: {namespaces=}, {deployments=} ({replica=})')
+    print(f'Total labels: {context.total_labels}, per-pod={context.no_labels_per_pod}')
     for i in range(1, context.namespaces+1): 
         context.it['i'] = i
         namespace = _write_namespace(index=i)    
         for j in range(1, context.deployments+1): 
             context.it['j'] = j
             _write_deployment(namespace=namespace, index=j)
+    print(f'generated in: {outdir}, total workloads={namespaces*deployments*replica}')
             
-
+    
 def _write_namespace(index: int) -> str:
     namespace = f'gc-ns-{index}'
     rendered = ns_template.render(**asdict(context))
@@ -71,16 +86,39 @@ def _write_namespace(index: int) -> str:
     
     
 def _write_deployment(namespace: str, index: int):
-    deployment = f'{namespace}-deployment-{index}'
+    deployment = f'{namespace}-rs-{index}'
     rendered = deployment_template.render(**asdict(context))
     ns_manifest_path = outdir / f'{deployment}.yaml'
     ns_manifest_path.write_text(rendered)
 
+def render_values_template(path: str, number: int) -> Dict[str, Any]:
+    """
+    Replace '{{ NUMBER }}' in values.yaml with the given number,
+    without evaluating the whole file as a Jinja2 template.
+    """
+    raw = Path(path).read_text()
+    rendered = raw.replace("{{ NUMBER }}", str(number))
+    return yaml.safe_load(rendered)
+
+
+def gc_labels(indent: int, count: int) -> str: 
+    i = context.it['i']
+    j = context.it['j']
+    labels: Dict[str, str] = {
+        f'gc-label-{i}-{j}-idx{idx}': f'gc-value-{i}-{j}-idx{idx}'
+        for idx in range(1, count + 1)
+    }
+    
+    dumped = yaml.dump(labels, default_flow_style=False, sort_keys=True).rstrip()
+    indented = '\n'.join(' ' * indent + line for line in dumped.splitlines())    
+    return indented
 
 
 def main():
-    global context, outdir
+    global context, outdir, env
     
+    env.globals['gc_labels'] = gc_labels
+
     context = Context.from_yaml('config.yaml')
 
     outdir = Path('output', context.bootstrap_id)

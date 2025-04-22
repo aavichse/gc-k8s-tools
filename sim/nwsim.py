@@ -46,7 +46,7 @@ app = FastAPI()
 request_id = 0
 connection_count = 0
 
-HOSTNAME = os.getenv('HOSTNAME')  # 'gc-ns-1-deployment-2-dkjdn' # socket.gethostname()
+HOSTNAME = os.getenv('HOSTNAME')  # 'gc-ns-1-rs-2-dkjdn' # socket.gethostname()
 if not HOSTNAME:
     logger.error("HOSTNAME environment variable not set")
     raise ValueError("HOSTNAME environment variable required")
@@ -142,7 +142,7 @@ async def send_random_requests():
                 for _ in range(BATCH_SIZE):
                     x = SOURCE_X
                     y = SOURCE_Y
-                    from_pod_name = HOSTNAME  # e.g., gc-ns-1-deployment-2-kjk332
+                    from_pod_name = HOSTNAME  # e.g., gc-ns-1-rs-2-kjk332
                     
                     r = random.uniform(0, 100)
                     if r < SAME_NS_RATIO:

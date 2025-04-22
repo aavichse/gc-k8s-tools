@@ -5,6 +5,16 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "bootstrap",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "./bootstrap.py",
+            "cwd": "${workspaceFolder}/scale",
+            "console": "integratedTerminal",
+            "args": [
+            ]
+        },
+        {
             "name": "labels-lab create from config.yaml",
             "type": "debugpy",
             "request": "launch",

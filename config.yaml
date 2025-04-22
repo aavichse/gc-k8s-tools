@@ -1,0 +1,25 @@
+
+outdir: output 
+
+# Total connections per  (interval) = Y
+# connection_per_interval =   Y /  (namespaces * deployments * replicasets) * 
+# For example: 
+# 10 namespaces, 5 deployments and 5 replicaset  -> 10 * 5 * 5 = 500 clients workloads
+# We want to test total connections per minutes = 10000
+# 
+# stat_interval: 60
+# connection_per_interval: 20    (10000/500)
+
+stat_interval: 10
+connection_per_interval: 5
+batch_size: 5
+same_ns_ratio: 30
+
+workloads: 
+  namespaces: 5
+  deployments: 5
+  replicaset: 2
+  total_labels: 100
+
+
+  

@@ -1,7 +1,4 @@
-# gc-k8s-tools
-General tools for GC K8s development
+# Scale 
 
-## Tools
-
-### [Labels Lab](labels-lab/README.md)
-Generate Kubernetes manifests with configurable labels for testing orchestration scale and performance.
+namespace:  `gc-ns-<namespace-index>`
+deployment: `gc-ns-<namespace-index>-rs-<index>`
