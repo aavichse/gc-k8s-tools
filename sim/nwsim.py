@@ -46,7 +46,9 @@ app = FastAPI()
 request_id = 0
 connection_count = 0
 
-HOSTNAME = os.getenv('HOSTNAME')  # 'gc-ns-1-rs-2-dkjdn' # socket.gethostname()
+# HOSTNAME = os.getenv('HOSTNAME')  
+HOSTNAME = 'gc-ns-1-rs-2-dkjdn' # for debug 
+
 if not HOSTNAME:
     logger.error("HOSTNAME environment variable not set")
     raise ValueError("HOSTNAME environment variable required")
@@ -66,7 +68,7 @@ RETRY_DELAY = 1  # Seconds to wait between retries
 def parse_pod_indices():
     try:
         parts = HOSTNAME.split('-')
-        if len(parts) < 6 or parts[0] != 'gc' or parts[1] != 'ns' or parts[3] != 'deployment':
+        if len(parts) < 6 or parts[0] != 'gc' or parts[1] != 'ns' or parts[3] != 'rs':
             raise ValueError("Invalid pod name format")
         x = int(parts[2])  # Namespace index
         y = int(parts[4])  # Deployment index

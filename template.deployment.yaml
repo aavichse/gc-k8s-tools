@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
       - name: nwsim
-        image: arikab64/gc-nwsim:1.2
+        image: arikab64/gc-nwsim:1.3
         command: ["python", "nwsim.py"]
         args:
           - "--stats-interval={{ stat_interval }}"
