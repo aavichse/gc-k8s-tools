@@ -25,7 +25,8 @@ class Context:
     replicaset: int = 1
 
     stat_interval: int = 10
-    connection_per_interval: int = 10
+    total_connections: int = 100
+    connection_per_interval: int = 10   # for a single pod
     batch_size: int = 5
     same_ns_ratio: int = 30    
     
@@ -45,13 +46,15 @@ class Context:
             replicaset=int(workloads['replicaset']),
             total_labels=int(workloads['total_labels']),
             stat_interval=int(raw['stat_interval']),
-            connection_per_interval=int(raw['connection_per_interval']),
+            total_connections=int(raw['total_connections']),
             batch_size=int(raw['batch_size']),
             same_ns_ratio=int(raw['same_ns_ratio']),
         )
         
         context.no_labels_per_pod = max(1,  int(context.total_labels / (context.namespaces * context.deployments)))
-        
+        context.connection_per_interval = int(context.total_connections / (
+            context.namespaces * context.deployments * context.replicaset
+        ))
         return context
 
 env = Environment(
@@ -74,6 +77,7 @@ def bootstrap_manifests():
     replica = context.replicaset
     print(f'Writes manifests for: {namespaces=}, {deployments=} ({replica=})')
     print(f'Total labels: {context.total_labels}, per-pod={context.no_labels_per_pod}')
+    print(f'Total connections: {context.total_connections} per {context.stat_interval} seconds, per-pod={context.connection_per_interval} ')
     for i in range(1, context.namespaces+1): 
         context.it['i'] = i
         namespace = _write_namespace(index=i)    
