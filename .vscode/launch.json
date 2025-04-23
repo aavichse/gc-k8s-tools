@@ -9,47 +9,20 @@
             "type": "debugpy",
             "request": "launch",
             "program": "./bootstrap.py",
-            "cwd": "${workspaceFolder}/scale",
+            "cwd": "${workspaceFolder}",
             "console": "integratedTerminal",
             "args": [
             ]
         },
         {
-            "name": "labels-lab create from config.yaml",
+            "name": "nwsim",
             "type": "debugpy",
             "request": "launch",
-            "program": "./gc-labels-lab.py",
-            "cwd": "${workspaceFolder}/labels-lab",
+            "program": "./nwsim.py",
+            "cwd": "${workspaceFolder}/sim",
             "console": "integratedTerminal",
             "args": [
-                "-f", 
-                "config.yaml"
             ]
         },
-        {
-            "name": "labels-lab generate config with 5000 labels",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "./gc-labels-lab.py",
-            "cwd": "${workspaceFolder}/labels-lab",
-            "console": "integratedTerminal",
-            "args": [
-                "--generate-config", 
-                "--total-labels",
-                "50000"
-            ]
-        },
-        {
-            "name": "labels-lab create from generated-config.yaml",
-            "type": "debugpy",
-            "request": "launch",
-            "program": "./gc-labels-lab.py",
-            "cwd": "${workspaceFolder}/labels-lab",
-            "console": "integratedTerminal",
-            "args": [
-                "-f", 
-                "generated_config.yaml"
-            ]
-        }
     ]
 }
