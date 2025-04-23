@@ -46,8 +46,8 @@ app = FastAPI()
 request_id = 0
 connection_count = 0
 
-# HOSTNAME = os.getenv('HOSTNAME')  
-HOSTNAME = 'gc-ns-1-rs-2-dkjdn' # for debug 
+HOSTNAME = os.getenv('HOSTNAME')  
+# HOSTNAME = 'gc-ns-1-rs-2-dkjdn' # for debug 
 
 if not HOSTNAME:
     logger.error("HOSTNAME environment variable not set")
