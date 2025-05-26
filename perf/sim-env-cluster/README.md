@@ -20,19 +20,19 @@ workloads:
   total_labels: 1000
 ```
 
-The configuration defines parameters for generating Kubernetes namespaces (gc-ns-X), deployments (gc-ns-deployment-Y), and services to simulate high-volume traffic. It specifies:
+The configuration defines parameters for generating Kubernetes namespaces (gc-ns-X), deployments (gc-ns-deployment-Y), and services to simulate high-volume traffic. It specifies:  
 
-`output`: Manifests are written to the output directory, organized by a unique bootstrap ID.
-**Traffic Settings**:
-`stat_interval`: 10 sets a 10-second interval for connection statistics.
-`total_connections`: 100 targets 100 connections per 10-second interval.
-`same_ns_ratio`: 30 directs 30% of connections to the same namespace (next deployment) and 70% to the next namespace (same deployment).
-`batch_size`: 5 sends 5 concurrent requests per batch.
-**Workloads**:
-`namespaces`: 3 creates 3 namespaces (gc-ns-1 to gc-ns-3).
-`deployments`: 2 creates 2 deployments per namespace (gc-ns-deployment-1, gc-ns-deployment-2).
-`replicaset`: 1 sets 1 replica per deployment.
-`total_labels`: 1000 assigns 1000 labels across all pods, with approximately 1000 / (3 * 2) ≈ 167 labels per pod.
+`output`: Manifests are written to the output directory, organized by a unique bootstrap ID.  
+**Traffic Settings**:  
+`stat_interval`: 10 sets a 10-second interval for connection statistics.  
+`total_connections`: 100 targets 100 connections per 10-second interval.  
+`same_ns_ratio`: 30 directs 30% of connections to the same namespace (next deployment) and 70% to the next namespace (same deployment).  
+`batch_size`: 5 sends 5 concurrent requests per batch.  
+**Workloads**:  
+`namespaces`: 3 creates 3 namespaces (gc-ns-1 to gc-ns-3).  
+`deployments`: 2 creates 2 deployments per namespace (gc-ns-deployment-1, gc-ns-deployment-2).  
+`replicaset`: 1 sets 1 replica per deployment.  
+`total_labels`: 1000 assigns 1000 labels across all pods, with approximately 1000 / (3 * 2) ≈ 167 labels per pod.  
 
 ### Usage
 ```bash
