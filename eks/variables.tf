@@ -67,9 +67,3 @@ variable "eks_cluster_version" {
   type        = string
   default     = "1.29"
 }
-
-variable "calico_version" {
-  description = "Version of Calico to install"
-  type        = string
-  default     = "v3.26.1"
-}
