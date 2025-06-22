@@ -6,6 +6,11 @@ $ terraform import kubernetes_config_map.aws_auth kube-system/aws-auth
 $ terraform apply
 ```
 
+## Import kubeconfig 
+```bash
+aws eks update-kubeconfig  --region eu-central-1 --name gc-k8s-eks-arika
+``
+
 ## View used resources
 Example of resources by tag `owner=arika`
 ```bash

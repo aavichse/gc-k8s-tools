@@ -38,11 +38,12 @@ variable "subnet_b" {
 #  --query "Parameter.Value" \
 #  --output text
 #
-variable "node_ami_id" {
-  description = "AMI ID for EKS worker nodes"
-  type        = string
-  default     = "ami-0e056134cbc299dd2"
-}
+
+# variable "node_ami_id" {
+#   description = "AMI ID for EKS worker nodes"
+#   type        = string
+#   default     = "ami-0e056134cbc299dd2"
+# }
 
 variable "node_instance_type" {
   description = "workernode instance type"
@@ -65,5 +66,5 @@ variable "eks_node_role_arn" {
 variable "eks_cluster_version" {
   description = "EKS cluster version"
   type        = string
-  default     = "1.29"
+  default     = "1.31"
 }
